@@ -13,8 +13,8 @@
     ports:
         - "{{ portainer_ip }}:9000:9000"
     restart_policy: unless-stopped
-    detach: yes
-    pull: yes
+    detach: true
+    pull: true
     volumes:
         - /opt/portainer/data:/data
         - /var/run/docker.sock:/var/run/docker.sock
