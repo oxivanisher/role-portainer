@@ -1,2 +1,5 @@
 ---
-# handlers file for portainer
+
+- name: reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes

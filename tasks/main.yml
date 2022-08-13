@@ -1,2 +1,48 @@
 ---
-# tasks file for portainer
+
+# using the container from https://github.com/growlf/docker-apt-cacher-ng/blob/master/acng.conf
+- name: create portainer_data volume
+  docker_volume:
+    name: portainer_data
+  ignore_errors: '{{ ansible_check_mode }}'
+
+- name: create portainer/portainer container
+  community.docker.docker_container:
+    name: portainer
+    image: portainer/portainer-ce
+    ports:
+        - "{{ portainer_ip }}:9000:9000"
+    restart_policy: unless-stopped
+    detach: yes
+    pull: yes
+    volumes:
+        - /opt/portainer/data:/data
+        - /var/run/docker.sock:/var/run/docker.sock
+  ignore_errors: '{{ ansible_check_mode }}'
+
+- name: ensure backup directory for portainer
+  ansible.builtin.file:
+    path: /mnt/backup/docker/
+    state: directory
+    mode: '0750'
+    owner: root
+    group: root
+
+# temp fix for https://github.com/portainer/portainer/issues/2046
+- name: ensure portainer git bugfix for /data
+  ansible.builtin.file:
+    src: /opt/portainer/data
+    dest: /data
+    owner: root
+    group: root
+    state: link
+
+# deploy docker-container script for systemd
+- name: deploy systemd docker-container service
+  ansible.builtin.copy:
+    src: docker-compose@.service
+    dest: /etc/systemd/system/docker-compose@.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload systemd
