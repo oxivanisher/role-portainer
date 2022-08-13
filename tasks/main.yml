@@ -11,13 +11,13 @@
     name: portainer
     image: portainer/portainer-ce
     ports:
-        - "{{ portainer_ip }}:9000:9000"
+      - "{{ portainer_ip }}:9000:9000"
     restart_policy: unless-stopped
     detach: true
     pull: true
     volumes:
-        - /opt/portainer/data:/data
-        - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/portainer/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
   ignore_errors: '{{ ansible_check_mode }}'
 
 - name: ensure backup directory for portainer
