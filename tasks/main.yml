@@ -1,11 +1,6 @@
 ---
 
 # using the container from https://github.com/growlf/docker-apt-cacher-ng/blob/master/acng.conf
-- name: create portainer_data volume
-  docker_volume:
-    name: portainer_data
-  ignore_errors: '{{ ansible_check_mode }}'
-
 - name: create portainer/portainer container
   community.docker.docker_container:
     name: portainer
