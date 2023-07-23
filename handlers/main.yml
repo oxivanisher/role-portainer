@@ -6,4 +6,4 @@
 - name: Reload rsyslog
   ansible.builtin.service:
     name: rsyslog.service
-    state: reloaded
+    state: restarted
