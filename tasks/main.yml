@@ -45,7 +45,7 @@
 - name: Deploy rsyslog config for docker-compose
   ansible.builtin.copy:
     src: docker-compose-rsyslog.conf
-    dest: /etc/rsyslog.d/docker-compose.conf
+    dest: /etc/rsyslog.d/00-docker-compose.conf
     owner: root
     group: root
     mode: "0644"
