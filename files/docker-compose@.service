@@ -21,5 +21,8 @@ ExecStart=/usr/bin/docker-compose up
 # Compose down, remove containers and volumes
 ExecStop=/usr/bin/docker-compose down -v
 
+[Journal]
+ForwardToSyslog=no # don't fill syslog
+
 [Install]
 WantedBy=multi-user.target
