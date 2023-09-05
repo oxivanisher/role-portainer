@@ -31,6 +31,12 @@
     group: root
     state: link
 
+# ensure that docker-compose is located in /usr/bin/docker-compose
+- name: Install docker-compose trough packages
+  ansible.builtin.package:
+    name: docker-compose
+    state: present
+
 # deploy docker-compose script for systemd
 - name: Deploy systemd docker-compose service
   ansible.builtin.copy:
