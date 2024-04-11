@@ -2,8 +2,12 @@
 - name: Reload systemd
   ansible.builtin.systemd:
     daemon_reload: true
+  become: true
+  become_user: root
 
 - name: Reload rsyslog
   ansible.builtin.service:
     name: rsyslog.service
     state: restarted
+  become: true
+  become_user: root

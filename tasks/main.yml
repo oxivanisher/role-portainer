@@ -13,6 +13,8 @@
       - /opt/portainer/data:/data
       - /var/run/docker.sock:/var/run/docker.sock
   ignore_errors: "{{ ansible_check_mode }}"
+  become: true
+  become_user: root
 
 - name: Ensure backup directory for portainer
   ansible.builtin.file:
@@ -21,6 +23,8 @@
     mode: "0750"
     owner: root
     group: root
+  become: true
+  become_user: root
 
 # temp fix for https://github.com/portainer/portainer/issues/2046
 - name: Ensure portainer git bugfix for /data
@@ -30,12 +34,16 @@
     owner: root
     group: root
     state: link
+  become: true
+  become_user: root
 
 # ensure that docker-compose is located in /usr/bin/docker-compose
 - name: Install docker-compose trough packages
   ansible.builtin.package:
     name: docker-compose
     state: present
+  become: true
+  become_user: root
 
 # deploy docker-compose script for systemd
 - name: Deploy systemd docker-compose service
@@ -46,6 +54,8 @@
     group: root
     mode: "0644"
   notify: Reload systemd
+  become: true
+  become_user: root
 
 # configure rsyslog to not fill up logfiles
 - name: Deploy rsyslog config for docker-compose
@@ -56,3 +66,5 @@
     group: root
     mode: "0644"
   notify: Reload rsyslog
+  become: true
+  become_user: root
