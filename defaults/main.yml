@@ -1,3 +1,4 @@
 ---
 
 portainer_ip: 0.0.0.0
+portainer_prune_olderthan: 744h

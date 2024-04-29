@@ -37,7 +37,6 @@
   become: true
   become_user: root
 
-# ensure that docker-compose is located in /usr/bin/docker-compose
 - name: Install docker-compose trough packages
   ansible.builtin.package:
     name: docker-compose
@@ -45,7 +44,6 @@
   become: true
   become_user: root
 
-# deploy docker-compose script for systemd
 - name: Deploy systemd docker-compose service
   ansible.builtin.copy:
     src: docker-compose@.service
@@ -57,7 +55,6 @@
   become: true
   become_user: root
 
-# configure rsyslog to not fill up logfiles
 - name: Deploy rsyslog config for docker-compose
   ansible.builtin.copy:
     src: docker-compose-rsyslog.conf
@@ -66,5 +63,27 @@
     group: root
     mode: "0644"
   notify: Reload rsyslog
+  become: true
+  become_user: root
+
+- name: Deploy systemd docker-prune service
+  ansible.builtin.template:
+    src: docker-prune.service.jinja2
+    dest: /etc/systemd/system/docker-prune.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload systemd
+  become: true
+  become_user: root
+
+- name: Deploy systemd docker-prune timer
+  ansible.builtin.copy:
+    src: docker-prune.timer
+    dest: /etc/systemd/system/docker-prune.timer
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload systemd
   become: true
   become_user: root
