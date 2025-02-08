@@ -1,5 +1,6 @@
 portainer
 =========
+[![Ansible Lint](https://github.com/oxivanisher/role-portainer/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/oxivanisher/role-portainer/actions/workflows/ansible-lint.yml)
 
 This role installs and configures portainer.
 It will also install a systemd timer that cleans portainer resources.
