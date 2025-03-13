@@ -6,6 +6,7 @@
     image: portainer/portainer-ce
     ports:
       - "{{ portainer_ip }}:9000:9000"
+      - "{{ portainer_ip }}:9443:9443"
     restart_policy: unless-stopped
     detach: true
     pull: true
