@@ -44,7 +44,7 @@
     state: present
   become: true
   become_user: root
-  when: not portainer_docker_compose_v2
+  when: not portainer_docker_compose_v2 | bool
 
 - name: Install docker-compose trough packages
   ansible.builtin.package:
@@ -52,7 +52,7 @@
     state: present
   become: true
   become_user: root
-  when: portainer_docker_compose_v2
+  when: portainer_docker_compose_v2 | bool
 
 - name: Deploy systemd docker-compose service unit
   ansible.builtin.copy:
@@ -64,7 +64,7 @@
   notify: Reload systemd
   become: true
   become_user: root
-  when: not portainer_docker_compose_v2
+  when: not portainer_docker_compose_v2 | bool
 
 - name: Deploy systemd docker-compose service unit
   ansible.builtin.copy:
@@ -76,7 +76,7 @@
   notify: Reload systemd
   become: true
   become_user: root
-  when: portainer_docker_compose_v2
+  when: portainer_docker_compose_v2 | bool
 
 - name: Deploy rsyslog config for docker-compose
   ansible.builtin.copy:
