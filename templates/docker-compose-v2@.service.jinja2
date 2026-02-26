@@ -25,6 +25,7 @@ ExecStop=/usr/bin/docker compose down -v
 # Do not fill syslog
 StandardOutput=journal
 StandardError=journal
+SyslogIdentifier=%N
 LogRateLimitIntervalSec=0
 
 [Install]
