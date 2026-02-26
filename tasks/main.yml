@@ -56,8 +56,8 @@
   when: portainer_docker_compose_v2 | bool
 
 - name: Deploy systemd docker-compose service unit
-  ansible.builtin.copy:
-    src: docker-compose-v1@.service
+  ansible.builtin.template:
+    src: docker-compose-v1@.service.jinja2
     dest: /etc/systemd/system/docker-compose@.service
     owner: root
     group: root
@@ -68,8 +68,8 @@
   when: not portainer_docker_compose_v2 | bool
 
 - name: Deploy systemd docker-compose service unit
-  ansible.builtin.copy:
-    src: docker-compose-v2@.service
+  ansible.builtin.template:
+    src: docker-compose-v2@.service.jinja2
     dest: /etc/systemd/system/docker-compose@.service
     owner: root
     group: root
@@ -80,8 +80,8 @@
   when: portainer_docker_compose_v2 | bool
 
 - name: Deploy rsyslog config for docker-compose
-  ansible.builtin.copy:
-    src: docker-compose-rsyslog.conf
+  ansible.builtin.template:
+    src: docker-compose-rsyslog.conf.jinja2
     dest: /etc/rsyslog.d/00-docker-compose.conf
     owner: root
     group: root
@@ -102,8 +102,8 @@
   become_user: root
 
 - name: Deploy systemd docker-prune timer unit
-  ansible.builtin.copy:
-    src: docker-prune.timer
+  ansible.builtin.template:
+    src: docker-prune.timer.jinja2
     dest: /etc/systemd/system/docker-prune.timer
     owner: root
     group: root
