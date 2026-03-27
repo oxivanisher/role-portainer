@@ -9,10 +9,11 @@ Role Variables
 --------------
 
 | Name                        | Comment                                                 | Default value    |
-|-----------------------------|---------------------------------------------------------|------------------|
+| --------------------------- | ------------------------------------------------------- | ---------------- |
 | portainer_ip                | On which IP will portainer listen on                    | `0.0.0.0`        |
 | portainer_prune_olderthan   | Prune resources only if they are older than             | `744h` (31 days) |
 | portainer_docker_compose_v2 | Use docker compose v2 (required for i.e. Ubuntu 24.04!) | `false`          |
+| portainer_custom_ca         | The path to a custom CA to be trusted by portainer      | ``               |
 
 Example Playbook
 ----------------

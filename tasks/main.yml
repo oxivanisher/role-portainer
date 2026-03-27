@@ -10,9 +10,11 @@
     restart_policy: unless-stopped
     detach: true
     pull: true
-    volumes:
-      - /opt/portainer/data:/data
-      - /var/run/docker.sock:/var/run/docker.sock
+    volumes: >-
+      {{
+        ['/opt/portainer/data:/data', '/var/run/docker.sock:/var/run/docker.sock']
+        + ([portainer_custom_ca + ':/certs/custom_ca.pem:ro'] if portainer_custom_ca else [])
+      }}
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
   become_user: root
