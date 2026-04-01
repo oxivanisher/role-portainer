@@ -17,7 +17,6 @@
       }}
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
-  become_user: root
 
 - name: Ensure backup directory for portainer
   ansible.builtin.file:
@@ -27,7 +26,6 @@
     owner: root
     group: root
   become: true
-  become_user: root
 
 # temp fix for https://github.com/portainer/portainer/issues/2046
 - name: Ensure portainer git bugfix for /data
@@ -39,14 +37,12 @@
     state: link
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
-  become_user: root
 
 - name: Install docker-compose trough packages
   ansible.builtin.package:
     name: docker-compose
     state: present
   become: true
-  become_user: root
   when: not portainer_docker_compose_v2 | bool
 
 - name: Install docker-compose trough packages
@@ -54,7 +50,6 @@
     name: docker-compose-plugin
     state: present
   become: true
-  become_user: root
   when: portainer_docker_compose_v2 | bool
 
 - name: Deploy systemd docker-compose service unit
@@ -66,7 +61,6 @@
     mode: "0644"
   notify: Reload systemd
   become: true
-  become_user: root
   when: not portainer_docker_compose_v2 | bool
 
 - name: Deploy systemd docker-compose service unit
@@ -78,7 +72,6 @@
     mode: "0644"
   notify: Reload systemd
   become: true
-  become_user: root
   when: portainer_docker_compose_v2 | bool
 
 - name: Deploy rsyslog config for docker-compose
@@ -90,7 +83,6 @@
     mode: "0644"
   notify: Reload rsyslog
   become: true
-  become_user: root
 
 - name: Deploy systemd docker-prune service unit
   ansible.builtin.template:
@@ -101,7 +93,6 @@
     mode: "0644"
   notify: Reload systemd
   become: true
-  become_user: root
 
 - name: Deploy systemd docker-prune timer unit
   ansible.builtin.template:
@@ -112,7 +103,6 @@
     mode: "0644"
   notify: Reload systemd
   become: true
-  become_user: root
 
 - name: Start and enable systemd docker-prune timer unit
   ansible.builtin.systemd_service:
@@ -122,4 +112,3 @@
     daemon_reload: true
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
-  become_user: root

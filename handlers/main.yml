@@ -3,7 +3,6 @@
   ansible.builtin.systemd:
     daemon_reload: true
   become: true
-  become_user: root
 
 - name: Reload rsyslog
   ansible.builtin.service:
@@ -11,4 +10,3 @@
     state: restarted
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
-  become_user: root
