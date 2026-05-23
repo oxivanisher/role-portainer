@@ -16,6 +16,9 @@ ExecStartPre=-/bin/bash -c 'docker volume ls -qf "name=%i_" | xargs docker volum
 ExecStartPre=-/bin/bash -c 'docker network ls -qf "name=%i_" | xargs docker network rm'
 ExecStartPre=-/bin/bash -c 'docker ps -aqf "name=%i_*" | xargs docker rm'
 
+# Build custom images
+ExecStartPre=/usr/bin/docker compose build --pull
+
 # Compose up
 ExecStart=/usr/bin/docker compose up
 
